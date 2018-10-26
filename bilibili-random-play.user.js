@@ -6,8 +6,8 @@
 // @author       Attect
 // @match        https://www.bilibili.com/video/av*
 // @require      https://s1.hdslb.com/bfs/static/jinkela/long/js/jquery/jquery1.7.2.min.js
-// @updateURL    https://github.com/Attect/Bilibili-HTML5-Random-Play/raw/master/bilibili-random-play.js
-// @downloadURL  https://github.com/Attect/Bilibili-HTML5-Random-Play/raw/master/bilibili-random-play.js
+// @updateURL    https://github.com/Attect/Bilibili-HTML5-Random-Play/raw/master/bilibili-random-play.user.js
+// @downloadURL  https://github.com/Attect/Bilibili-HTML5-Random-Play/raw/master/bilibili-random-play.user.js
 // @grant        none
 // ==/UserScript==
 
