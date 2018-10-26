@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Bilibili随机播放
 // @namespace    https://attect.sudio/
-// @version      2
+// @version      3
 // @description  随机播放B站分P视频
 // @author       Attect
 // @match        https://www.bilibili.com/video/av*
@@ -49,13 +49,15 @@ var currentPart = 1;
  */
 var autoLickList = false;
 
+var fullScreen = false;
+
 /**
  * 给video加入的播放结束事件
  */
 var videoEventFunction = function(){
     print("video play end");
     if(randomStatus) setTimeout(function(){playNext()},1000);
-    setTimeout(function(){addVideoEvent();},2000);
+    // setTimeout(function(){addVideoEvent();},2000);
 };
 
 function afterReady(){
@@ -115,12 +117,16 @@ function addVideoEvent(){
                 if(randomStatus){
                     playNext();
                 }else{
-                    $($("ul.list-box li a")[currentPart++])[0].click();
+                    window.player.next();
                 }
             });
             print("已更新“下一个”按钮事件");
         };
         setTimeout(function(){bindAction();},100);
+    }
+
+    if(fullScreen && !window.player.isFullScreen()){
+        $(".bilibili-player-video-btn-fullscreen").click();
     }
 }
 
@@ -177,6 +183,7 @@ function playNext(){
     print("将随机播放分P:"+nextPart);
     currentPart = nextPart;
     autoLickList = true;
+    fullScreen = window.player.isFullScreen();
     $($("ul.list-box li a")[nextPart-1])[0].click();
     setTimeout(function(){
         addVideoEvent();
