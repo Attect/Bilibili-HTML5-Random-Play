@@ -5,6 +5,7 @@
 // @description  随机播放B站分P视频
 // @author       Attect
 // @match        https://www.bilibili.com/video/av*
+// @match        https://www.bilibili.com/video/BV*
 // @require      https://s1.hdslb.com/bfs/static/jinkela/long/js/jquery/jquery1.7.2.min.js
 // @updateURL    https://github.com/Attect/Bilibili-HTML5-Random-Play/raw/master/bilibili-random-play.user.js
 // @downloadURL  https://github.com/Attect/Bilibili-HTML5-Random-Play/raw/master/bilibili-random-play.user.js
@@ -90,6 +91,10 @@ function afterListInit(){
         if($("ul.list-box li a").length>0){
             initRandomButton();
             injectList();
+            var randomEnabled = sessionStorage.random;
+            if (randomEnabled) {
+                toggleRandom();
+            }
         }else{
             afterListInit();
         }
@@ -137,7 +142,11 @@ function initRandomButton(){
     console.log("initRandomButton");
     randomButton = $("<a style='margin-left:1rem'>随机播放:Off</a>");
     randomButton.click(function(){toggleRandom()});
-    randomButton.insertBefore($(".range-box>.cur-page"));
+    if (/\/video\/BV.*/.test(location.href)) {
+        randomButton.insertBefore($(".range-box"));
+    } else {
+        randomButton.insertBefore($(".range-box>.cur-page"));
+    }
 }
 
 /**
@@ -163,6 +172,7 @@ function injectList(){
 function toggleRandom(){
     print("toggleRandom");
     randomStatus = !randomStatus;
+    sessionStorage.random = Number(randomStatus);
     if(randomStatus === true){
         randomButton.text("随机播放:On");
         addVideoEvent();
